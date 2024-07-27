@@ -31,14 +31,14 @@ public class Tasks {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(calendar.getTime());
-        logger.info("testTask1 XXXXXXXXX {}, {}", currentTime, Thread.currentThread().getName());
+        logger.debug("testTask1 XXXXXXXXX {}, {}", currentTime, Thread.currentThread().getName());
         List<Map<String, Object>> queryList = jdbcTemplate.queryForList(String.format("""
                 SELECT * FROM dev_distributed_task.task
                 WHERE task_name='test1' AND next_scheduled_time IS NULL OR next_scheduled_time <= '%s'
                 LIMIT 1 FOR UPDATE SKIP LOCKED;
                 """, currentTime));
         if (queryList.isEmpty()) {
-            logger.info("map is empty");
+            logger.debug("map is empty");
             return;
         }
 
@@ -61,14 +61,14 @@ public class Tasks {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(calendar.getTime());
-        logger.info("testTask2 XXXXXXXXX {}, {}", currentTime, Thread.currentThread().getName());
+        logger.debug("testTask2 XXXXXXXXX {}, {}", currentTime, Thread.currentThread().getName());
         List<Map<String, Object>> queryList = jdbcTemplate.queryForList(String.format("""
                 SELECT * FROM dev_distributed_task.task
                 WHERE task_name='test1' AND next_scheduled_time IS NULL OR next_scheduled_time <= '%s'
                 LIMIT 1 FOR UPDATE SKIP LOCKED;
                 """, currentTime));
         if (queryList.isEmpty()) {
-            logger.info("map is empty");
+            logger.debug("map is empty");
             return;
         }
 
@@ -91,14 +91,14 @@ public class Tasks {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(calendar.getTime());
-        logger.info("testTask3 XXXXXXXXX {}, {}", currentTime, Thread.currentThread().getName());
+        logger.debug("testTask3 XXXXXXXXX {}, {}", currentTime, Thread.currentThread().getName());
         List<Map<String, Object>> queryList = jdbcTemplate.queryForList(String.format("""
                 SELECT * FROM dev_distributed_task.task
                 WHERE task_name='test1' AND next_scheduled_time IS NULL OR next_scheduled_time <= '%s'
                 LIMIT 1 FOR UPDATE SKIP LOCKED;
                 """, currentTime));
         if (queryList.isEmpty()) {
-            logger.info("map is empty");
+            logger.debug("map is empty");
             return;
         }
 
@@ -121,14 +121,14 @@ public class Tasks {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(calendar.getTime());
-        logger.info("testTask4 XXXXXXXXX {}, {}", currentTime, Thread.currentThread().getName());
+        logger.debug("testTask4 XXXXXXXXX {}, {}", currentTime, Thread.currentThread().getName());
         List<Map<String, Object>> queryList = jdbcTemplate.queryForList(String.format("""
                 SELECT * FROM dev_distributed_task.task
                 WHERE task_name='test1' AND next_scheduled_time IS NULL OR next_scheduled_time <= '%s'
                 LIMIT 1 FOR UPDATE SKIP LOCKED;
                 """, currentTime));
         if (queryList.isEmpty()) {
-            logger.info("map is empty");
+            logger.debug("map is empty");
             return;
         }
 
@@ -151,14 +151,14 @@ public class Tasks {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(calendar.getTime());
-        logger.info("testTask5 XXXXXXXXX {}, {}", currentTime, Thread.currentThread().getName());
+        logger.debug("testTask5 XXXXXXXXX {}, {}", currentTime, Thread.currentThread().getName());
         List<Map<String, Object>> queryList = jdbcTemplate.queryForList(String.format("""
                 SELECT * FROM dev_distributed_task.task
                 WHERE task_name='test1' AND next_scheduled_time IS NULL OR next_scheduled_time <= '%s'
                 LIMIT 1 FOR UPDATE SKIP LOCKED;
                 """, currentTime));
         if (queryList.isEmpty()) {
-            logger.info("map is empty");
+            logger.debug("map is empty");
             return;
         }
 
@@ -181,14 +181,14 @@ public class Tasks {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(calendar.getTime());
-        logger.info("testTask6 XXXXXXXXX {}, {}", currentTime, Thread.currentThread().getName());
+        logger.debug("testTask6 XXXXXXXXX {}, {}", currentTime, Thread.currentThread().getName());
         List<Map<String, Object>> queryList = jdbcTemplate.queryForList(String.format("""
                 SELECT * FROM dev_distributed_task.task
                 WHERE task_name='test1' AND next_scheduled_time IS NULL OR next_scheduled_time <= '%s'
                 LIMIT 1 FOR UPDATE SKIP LOCKED;
                 """, currentTime));
         if (queryList.isEmpty()) {
-            logger.info("map is empty");
+            logger.debug("map is empty");
             return;
         }
 
@@ -211,14 +211,14 @@ public class Tasks {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(calendar.getTime());
-        logger.info("testTask7 XXXXXXXXX {}, {}", currentTime, Thread.currentThread().getName());
+        logger.debug("testTask7 XXXXXXXXX {}, {}", currentTime, Thread.currentThread().getName());
         List<Map<String, Object>> queryList = jdbcTemplate.queryForList(String.format("""
                 SELECT * FROM dev_distributed_task.task
                 WHERE task_name='test1' AND next_scheduled_time IS NULL OR next_scheduled_time <= '%s'
                 LIMIT 1 FOR UPDATE SKIP LOCKED;
                 """, currentTime));
         if (queryList.isEmpty()) {
-            logger.info("map is empty");
+            logger.debug("map is empty");
             return;
         }
 
@@ -241,14 +241,14 @@ public class Tasks {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(calendar.getTime());
-        logger.info("testTask8 XXXXXXXXX {}, {}", currentTime, Thread.currentThread().getName());
+        logger.debug("testTask8 XXXXXXXXX {}, {}", currentTime, Thread.currentThread().getName());
         List<Map<String, Object>> queryList = jdbcTemplate.queryForList(String.format("""
                 SELECT * FROM dev_distributed_task.task
                 WHERE task_name='test1' AND next_scheduled_time IS NULL OR next_scheduled_time <= '%s'
                 LIMIT 1 FOR UPDATE SKIP LOCKED;
                 """, currentTime));
         if (queryList.isEmpty()) {
-            logger.info("map is empty");
+            logger.debug("map is empty");
             return;
         }
 
