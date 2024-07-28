@@ -45,7 +45,7 @@ public class Tasks {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         String currentTime = new SimpleDateFormat(DATETIME_FORMAT).format(calendar.getTime());
-        logger.debug("{} XXXXXXXXX {}, {}", taskName, currentTime, Thread.currentThread().getName());
+        logger.info("{} XXXXXXXXX {}, {}", taskName, currentTime, Thread.currentThread().getName());
         List<Map<String, Object>> queryList = jdbcTemplate.queryForList(String.format(FETCH_LOCK_SQL, currentTime));
         if (queryList.isEmpty()) {
 
@@ -53,7 +53,7 @@ public class Tasks {
         }
 
         String nextScheduledTime = getNextScheduledTime();
-        jdbcTemplate.execute(String.format(UPDATE_TASK_SQL, currentTime, currentTime, nextScheduledTime, "testTask1"));
+        jdbcTemplate.execute(String.format(UPDATE_TASK_SQL, currentTime, currentTime, nextScheduledTime, taskName));
         logger.info("{} executed at {}", taskName, currentTime);
     }
 

@@ -1,0 +1,33 @@
+spring:
+  profiles:
+    active: test
+  sql:
+    init:
+      enabled: true
+      username: postgres
+      password: zhufuyuan
+      mode: always
+      data-location: classpath:db/migrate/data.sql
+      schema-location: classpath:db/migrate/schema.sql
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=dev_distributed_task
+    username: postgres
+    password: zhufuyuan
+    initialize-schema: always
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  port: 9000
+
+logging:
+  pattern:
+    console: "%clr(%d{HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:%5p}) %clr(-){faint} %clr([%t]){faint} %clr(%-40logger{39}){cyan}[%line]%clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}"
+  level:
+    root: DEBUG
