@@ -1,1 +1,1 @@
-[![Quality Gate Status](http://localhost:9101/api/project_badges/measure?project=Distributed-Task&metric=alert_status&token=sqb_0df5bc84ace91a489555f7e11177122c5c9a8d41)](http://localhost:9101/dashboard?id=Distributed-Task)
+[![Quality Gate Status](http://localhost:9101/api/project_badges/measure?project=Distributed-Task&metric=alert_status&token=sqb_a6375b105245f995b0584e041011d66e112e8bdd)](http://localhost:9101/dashboard?id=Distributed-Task)
