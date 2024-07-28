@@ -41,13 +41,11 @@ public class Tasks {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    @Scheduled(cron = "2,12,22,32,42,52 * * * * ? ")
-    @Transactional
-    public void testTask1() {
+    private void startRun(String taskName) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         String currentTime = new SimpleDateFormat(DATETIME_FORMAT).format(calendar.getTime());
-        logger.debug("testTask1 XXXXXXXXX {}, {}", currentTime, Thread.currentThread().getName());
+        logger.debug("{} XXXXXXXXX {}, {}", taskName, currentTime, Thread.currentThread().getName());
         List<Map<String, Object>> queryList = jdbcTemplate.queryForList(String.format(FETCH_LOCK_SQL, currentTime));
         if (queryList.isEmpty()) {
 
@@ -56,133 +54,55 @@ public class Tasks {
 
         String nextScheduledTime = getNextScheduledTime();
         jdbcTemplate.execute(String.format(UPDATE_TASK_SQL, currentTime, currentTime, nextScheduledTime, "testTask1"));
-        logger.info("testTask1 executed at {}", currentTime);
+        logger.info("{} executed at {}", taskName, currentTime);
+    }
+
+    @Scheduled(cron = "2,12,22,32,42,52 * * * * ? ")
+    @Transactional
+    public void testTask1() {
+        startRun("testTask1");
     }
 
     @Scheduled(cron = "2,12,22,32,42,52 * * * * ? ")
     @Transactional
     public void testTask2() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        String currentTime = new SimpleDateFormat(DATETIME_FORMAT).format(calendar.getTime());
-        logger.debug("testTask2 XXXXXXXXX {}, {}", currentTime, Thread.currentThread().getName());
-        List<Map<String, Object>> queryList = jdbcTemplate.queryForList(String.format(FETCH_LOCK_SQL, currentTime));
-        if (queryList.isEmpty()) {
-
-            return;
-        }
-
-        String nextScheduledTime = getNextScheduledTime();
-        jdbcTemplate.execute(String.format(UPDATE_TASK_SQL, currentTime, currentTime, nextScheduledTime, "testTask2"));
-        logger.info("testTask2 executed at {}", currentTime);
+        startRun("testTask2");
     }
 
     @Scheduled(cron = "2,12,22,32,42,52 * * * * ? ")
     @Transactional
     public void testTask3() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        String currentTime = new SimpleDateFormat(DATETIME_FORMAT).format(calendar.getTime());
-        logger.debug("testTask3 XXXXXXXXX {}, {}", currentTime, Thread.currentThread().getName());
-        List<Map<String, Object>> queryList = jdbcTemplate.queryForList(String.format(FETCH_LOCK_SQL, currentTime));
-        if (queryList.isEmpty()) {
-
-            return;
-        }
-
-        String nextScheduledTime = getNextScheduledTime();
-        jdbcTemplate.execute(String.format(UPDATE_TASK_SQL, currentTime, currentTime, nextScheduledTime, "testTask3"));
-        logger.info("testTask3 executed at {}", currentTime);
+        startRun("testTask3");
     }
 
     @Scheduled(cron = "2,12,22,32,42,52 * * * * ? ")
     @Transactional
     public void testTask4() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        String currentTime = new SimpleDateFormat(DATETIME_FORMAT).format(calendar.getTime());
-        logger.debug("testTask4 XXXXXXXXX {}, {}", currentTime, Thread.currentThread().getName());
-        List<Map<String, Object>> queryList = jdbcTemplate.queryForList(String.format(FETCH_LOCK_SQL, currentTime));
-        if (queryList.isEmpty()) {
-
-            return;
-        }
-
-        String nextScheduledTime = getNextScheduledTime();
-        jdbcTemplate.execute(String.format(UPDATE_TASK_SQL, currentTime, currentTime, nextScheduledTime, "testTask4"));
-        logger.info("testTask4 executed at {}", currentTime);
+        startRun("testTask4");
     }
 
     @Scheduled(cron = "2,12,22,32,42,52 * * * * ? ")
     @Transactional
     public void testTask5() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        String currentTime = new SimpleDateFormat(DATETIME_FORMAT).format(calendar.getTime());
-        logger.debug("testTask5 XXXXXXXXX {}, {}", currentTime, Thread.currentThread().getName());
-        List<Map<String, Object>> queryList = jdbcTemplate.queryForList(String.format(FETCH_LOCK_SQL, currentTime));
-        if (queryList.isEmpty()) {
-
-            return;
-        }
-
-        String nextScheduledTime = getNextScheduledTime();
-        jdbcTemplate.execute(String.format(UPDATE_TASK_SQL, currentTime, currentTime, nextScheduledTime, "testTask5"));
-        logger.info("testTask5 executed at {}", currentTime);
+        startRun("testTask5");
     }
 
     @Scheduled(cron = "2,12,22,32,42,52 * * * * ? ")
     @Transactional
     public void testTask6() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        String currentTime = new SimpleDateFormat(DATETIME_FORMAT).format(calendar.getTime());
-        logger.debug("testTask6 XXXXXXXXX {}, {}", currentTime, Thread.currentThread().getName());
-        List<Map<String, Object>> queryList = jdbcTemplate.queryForList(String.format(FETCH_LOCK_SQL, currentTime));
-        if (queryList.isEmpty()) {
-
-            return;
-        }
-
-        String nextScheduledTime = getNextScheduledTime();
-        jdbcTemplate.execute(String.format(UPDATE_TASK_SQL, currentTime, currentTime, nextScheduledTime, "testTask6"));
-        logger.info("testTask6 executed at {}", currentTime);
+        startRun("testTask6");
     }
 
     @Scheduled(cron = "2,12,22,32,42,52 * * * * ? ")
     @Transactional
     public void testTask7() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        String currentTime = new SimpleDateFormat(DATETIME_FORMAT).format(calendar.getTime());
-        logger.debug("testTask7 XXXXXXXXX {}, {}", currentTime, Thread.currentThread().getName());
-        List<Map<String, Object>> queryList = jdbcTemplate.queryForList(String.format(FETCH_LOCK_SQL, currentTime));
-        if (queryList.isEmpty()) {
-
-            return;
-        }
-
-        String nextScheduledTime = getNextScheduledTime();
-        jdbcTemplate.execute(String.format(UPDATE_TASK_SQL, currentTime, currentTime, nextScheduledTime, "testTask7"));
-        logger.info("testTask7 executed at {}", currentTime);
+        startRun("testTask7");
     }
 
     @Scheduled(cron = "2,12,22,32,42,52 * * * * ? ")
     @Transactional
     public void testTask8() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        String currentTime = new SimpleDateFormat(DATETIME_FORMAT).format(calendar.getTime());
-        logger.debug("testTask8 XXXXXXXXX {}, {}", currentTime, Thread.currentThread().getName());
-        List<Map<String, Object>> queryList = jdbcTemplate.queryForList(String.format(FETCH_LOCK_SQL, currentTime));
-        if (queryList.isEmpty()) {
-
-            return;
-        }
-
-        String nextScheduledTime = getNextScheduledTime();
-        jdbcTemplate.execute(String.format(UPDATE_TASK_SQL, currentTime, currentTime, nextScheduledTime, "testTask8"));
-        logger.info("testTask8 executed at {}", currentTime);
+        startRun("testTask8");
     }
 
     private String getNextScheduledTime() {
