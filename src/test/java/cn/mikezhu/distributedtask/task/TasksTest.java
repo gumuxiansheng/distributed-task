@@ -49,6 +49,9 @@ class TasksTest {
         // Run the task
         tasks.testTask1();
 
+        // Task1 executed, Task2 should not be executed
+        tasks.testTask2();
+
         // Verify the result
         checkTestRun("testTask1");
     }
