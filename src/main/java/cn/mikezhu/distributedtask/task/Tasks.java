@@ -1,10 +1,10 @@
 package cn.mikezhu.distributedtask.task;
 
+import cn.mikezhu.distributedtask.annotation.DistributedTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.support.CronExpression;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,56 +57,56 @@ public class Tasks {
         logger.info("{} executed at {}", taskName, currentTime);
     }
 
-    @Scheduled(cron = "2,12,22,32,42,52 * * * * ? ")
     @Transactional
+    @DistributedTask(name = "testTask1", cron = "2,12,22,32,42,52 * * * * ?")
     public void testTask1() {
         startRun("testTask1");
     }
 
-    @Scheduled(cron = "2,12,22,32,42,52 * * * * ? ")
+    @DistributedTask(name = "testTask2", cron = "2,12,22,32,42,52 * * * * ?")
     @Transactional
     public void testTask2() {
         startRun("testTask2");
     }
 
-    @Scheduled(cron = "2,12,22,32,42,52 * * * * ? ")
+    @DistributedTask(name = "testTask3", cron = "2,12,22,32,42,52 * * * * ?")
     @Transactional
     public void testTask3() {
         startRun("testTask3");
     }
 
-    @Scheduled(cron = "2,12,22,32,42,52 * * * * ? ")
+    @DistributedTask(name = "testTask4", cron = "2,12,22,32,42,52 * * * * ?")
     @Transactional
     public void testTask4() {
         startRun("testTask4");
     }
 
-    @Scheduled(cron = "2,12,22,32,42,52 * * * * ? ")
+    @DistributedTask(name = "testTask5", cron = "2,12,22,32,42,52 * * * * ?")
     @Transactional
     public void testTask5() {
         startRun("testTask5");
     }
 
-    @Scheduled(cron = "2,12,22,32,42,52 * * * * ? ")
+    @DistributedTask(name = "testTask6", cron = "2,12,22,32,42,52 * * * * ?")
     @Transactional
     public void testTask6() {
         startRun("testTask6");
     }
 
-    @Scheduled(cron = "2,12,22,32,42,52 * * * * ? ")
+    @DistributedTask(name = "testTask7", cron = "2,12,22,32,42,52 * * * * ?")
     @Transactional
     public void testTask7() {
         startRun("testTask7");
     }
 
-    @Scheduled(cron = "2,12,22,32,42,52 * * * * ? ")
+    @DistributedTask(name = "testTask8", cron = "2,12,22,32,42,52 * * * * ?")
     @Transactional
     public void testTask8() {
         startRun("testTask8");
     }
 
     private String getNextScheduledTime() {
-        CronExpression expression = CronExpression.parse("2,12,22,32,42,52 * * * * ? ");
+        CronExpression expression = CronExpression.parse("2,12,22,32,42,52 * * * * ?");
         LocalDateTime nextTime = expression.next(LocalDateTime.now());
         if (nextTime == null) {
             return "2099-12-31 23:59:59";
