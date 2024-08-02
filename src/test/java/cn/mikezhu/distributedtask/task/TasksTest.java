@@ -1,5 +1,6 @@
 package cn.mikezhu.distributedtask.task;
 
+import cn.mikezhu.distributedtask.annotation.DistributedTaskAspect;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,7 +33,7 @@ class TasksTest {
     private JdbcTemplate jdbcTemplate;
 
     private void priorTestRun() {
-        jdbcTemplate.execute(String.format(Tasks.UPDATE_TASK_SQL, "2019-12-31 23:59:59", "2019-12-31 23:59:59", "2019-12-31 23:59:59", ""));
+        jdbcTemplate.execute(String.format(DistributedTaskAspect.UPDATE_TASK_SQL, "2019-12-31 23:59:59", "2019-12-31 23:59:59", "2019-12-31 23:59:59", ""));
     }
     private void checkTestRun(String funcName) {
         List<Map<String, Object>> queryList = jdbcTemplate.queryForList(String.format(FETCH_SQL, funcName));
