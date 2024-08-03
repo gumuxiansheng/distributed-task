@@ -1,4 +1,6 @@
 # Distributed Task
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=gumuxiansheng_distributed-task&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=gumuxiansheng_distributed-task)
+
 A preemptive distributed task scheduling system, developed based on Spring Boot, implementing the preemptive distributed task scheduling function. No scheduling center is used, and task preemption is achieved through database locks.
 
 抢占式分布式任务调度系统，基于Spring Boot开发，实现抢占式分布式任务调度功能。无调度中心，通过数据库锁实现任务抢占。
