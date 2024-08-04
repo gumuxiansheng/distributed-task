@@ -57,7 +57,7 @@ public class DistributedTaskAspect {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         String currentTime = new SimpleDateFormat(DATETIME_FORMAT).format(calendar.getTime());
-        logger.info("{} query for token {}, {}", taskName, currentTime, Thread.currentThread().getName());
+        logger.info("{} query for token {}", taskName, currentTime);
         List<Map<String, Object>> queryList = jdbcTemplate.queryForList(String.format(FETCH_LOCK_SQL, currentTime));
         if (queryList.isEmpty()) {
             return null;
