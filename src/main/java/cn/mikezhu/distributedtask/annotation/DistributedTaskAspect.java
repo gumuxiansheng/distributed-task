@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.scheduling.support.CronExpression;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
@@ -41,13 +42,27 @@ public class DistributedTaskAspect {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public DistributedTaskAspect(JdbcTemplate jdbcTemplate) {
+    private final TransactionTemplate transactionTemplate;
+
+    public DistributedTaskAspect(JdbcTemplate jdbcTemplate, TransactionTemplate transactionTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+        this.transactionTemplate = transactionTemplate;
     }
 
     @Around(value = "@annotation(DistributedTask)")
-    public Object aroundMethod(ProceedingJoinPoint jp) throws Throwable {
+    public Object aroundMethod(ProceedingJoinPoint jp) {
         logger.info("annotation DistributedTask");
+        return transactionTemplate.execute(tx -> {
+            try {
+                return process(jp);
+            } catch (Throwable e) {
+                logger.error("DistributedTaskAspect error", e);
+            }
+            return null;
+        });
+    }
+
+    private Object process(ProceedingJoinPoint jp) throws Throwable {
         MethodSignature signature = (MethodSignature) jp.getSignature();
         Method method = signature.getMethod();
         DistributedTask distributedTaskAnno = method.getAnnotation(DistributedTask.class);
