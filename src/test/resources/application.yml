@@ -1,20 +1,15 @@
 spring:
-  profiles:
-    active: test
   sql:
     init:
       enabled: true
-      username: postgres
-      password: zhufuyuan
       mode: always
-      data-location: classpath:db/migrate/data.sql
-      schema-location: classpath:db/migrate/schema.sql
+      schema-locations: classpath:db/migrate/schema.sql
+      data-locations: classpath:db/migrate/data.sql
   datasource:
     driverClassName: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/postgres?currentSchema=dev_distributed_task
     username: postgres
     password: zhufuyuan
-    initialize-schema: always
   jpa:
     hibernate:
       ddl-auto: update
