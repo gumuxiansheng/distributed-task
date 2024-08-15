@@ -52,22 +52,33 @@ public class DistributedTaskAspect {
     @Around(value = "@annotation(DistributedTask)")
     public Object aroundMethod(ProceedingJoinPoint jp) {
         logger.info("annotation DistributedTask");
-        return transactionTemplate.execute(tx -> {
-            try {
-                return process(jp);
-            } catch (Throwable e) {
-                logger.error("DistributedTaskAspect error", e);
-            }
-            return null;
-        });
-    }
-
-    private Object process(ProceedingJoinPoint jp) throws Throwable {
         MethodSignature signature = (MethodSignature) jp.getSignature();
         Method method = signature.getMethod();
         DistributedTask distributedTaskAnno = method.getAnnotation(DistributedTask.class);
         String taskName = distributedTaskAnno.name();
         String cron = distributedTaskAnno.cron();
+        Boolean goRun = transactionTemplate.execute(tx -> {
+            try {
+                return requireToken(taskName, cron);
+            } catch (Exception e) {
+                logger.error("DistributedTaskAspect error", e);
+            }
+            return false;
+        });
+
+        if (Boolean.TRUE.equals(goRun)) {
+            try {
+                logger.info("{} executed", taskName);
+                return jp.proceed();
+            } catch (Throwable e) {
+                logger.error(e.getMessage());
+            }
+        }
+
+        return null;
+    }
+
+    private boolean requireToken(String taskName, String cron) {
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
@@ -75,14 +86,13 @@ public class DistributedTaskAspect {
         logger.info("{} query for token {}", taskName, currentTime);
         List<Map<String, Object>> queryList = jdbcTemplate.queryForList(String.format(FETCH_LOCK_SQL, currentTime));
         if (queryList.isEmpty()) {
-            return null;
+            return false;
         }
 
         String nextScheduledTime = getNextScheduledTime(cron);
         jdbcTemplate.execute(String.format(UPDATE_TASK_SQL, currentTime, currentTime, nextScheduledTime, taskName));
-        logger.info("{} executed at {}", taskName, currentTime);
 
-        return jp.proceed();
+        return true;
     }
 
     private String getNextScheduledTime(String cron) {
