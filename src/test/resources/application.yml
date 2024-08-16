@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: test
   sql:
     init:
       enabled: true
@@ -6,10 +8,8 @@ spring:
       schema-locations: classpath:db/migrate/schema.sql
       data-locations: classpath:db/migrate/data.sql
   datasource:
-    driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=dev_distributed_task
-    username: postgres
-    password: zhufuyuan
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:test
   jpa:
     hibernate:
       ddl-auto: update
