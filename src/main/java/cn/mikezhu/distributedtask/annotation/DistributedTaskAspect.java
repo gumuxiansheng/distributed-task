@@ -28,7 +28,7 @@ public class DistributedTaskAspect {
     public static final String DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
     public static final String FETCH_LOCK_SQL = """
             SELECT * FROM dev_distributed_task.task
-            WHERE task_name='test1' AND next_scheduled_time IS NULL OR next_scheduled_time <= '%s'
+            WHERE task_name='%s' AND (next_scheduled_time IS NULL OR next_scheduled_time <= '%s')
             LIMIT 1 FOR UPDATE SKIP LOCKED;
             """;
     public static final String UPDATE_TASK_SQL = """
@@ -37,7 +37,7 @@ public class DistributedTaskAspect {
                  last_end_time='%s',
                  next_scheduled_time='%s',
                  task_ex='%s'
-            WHERE task_name='test1';
+            WHERE task_name='%s';
             """;
 
     private final JdbcTemplate jdbcTemplate;
@@ -84,13 +84,13 @@ public class DistributedTaskAspect {
         calendar.setTimeInMillis(System.currentTimeMillis());
         String currentTime = new SimpleDateFormat(DATETIME_FORMAT).format(calendar.getTime());
         logger.info("{} query for token {}", taskName, currentTime);
-        List<Map<String, Object>> queryList = jdbcTemplate.queryForList(String.format(FETCH_LOCK_SQL, currentTime));
+        List<Map<String, Object>> queryList = jdbcTemplate.queryForList(String.format(FETCH_LOCK_SQL, taskName, currentTime));
         if (queryList.isEmpty()) {
             return false;
         }
 
         String nextScheduledTime = getNextScheduledTime(cron);
-        jdbcTemplate.execute(String.format(UPDATE_TASK_SQL, currentTime, currentTime, nextScheduledTime, taskName));
+        jdbcTemplate.execute(String.format(UPDATE_TASK_SQL, currentTime, currentTime, nextScheduledTime, taskName, taskName));
 
         return true;
     }
