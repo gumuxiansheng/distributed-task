@@ -15,14 +15,27 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
+/**
+ * 单元测试：分布式任务执行控制逻辑验证。
+ *
+ * 测试流程：
+ * 1. 准备数据（priorTestRun）
+ * 2. 调用任务方法（tasks.testTaskX）
+ * 3. 校验任务状态（checkTestRun）
+ *
+ * 该测试使用事务回滚保证每个用例独立。
+ */
 @SpringBootTest
 @Profile("test")
 @Transactional
 @Rollback
 class TasksTest {
+    /**
+     * 查询任务状态的 SQL 模板，基于 task_name 和 task_ex 唯一定位一条任务记录。
+     */
     public static final String FETCH_SQL = """
             SELECT * FROM dev_distributed_task.task
-            WHERE task_name='test1' AND task_ex = '%s'
+            WHERE task_name='%s' AND task_ex = '%s'
             LIMIT 1;
             """;
 
@@ -32,21 +45,36 @@ class TasksTest {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    private void priorTestRun() {
-        jdbcTemplate.execute(String.format(DistributedTaskAspect.UPDATE_TASK_SQL, "2019-12-31 23:59:59", "2019-12-31 23:59:59", "2019-12-31 23:59:59", ""));
+    /**
+     * 预置测试场景，设置指定 taskName 对应的任务为可执行（在 SQL 中修改时间/状态）。
+     *
+     * @param taskName 需要设置状态的任务名称
+     */
+    private void priorTestRun(String taskName) {
+        jdbcTemplate.execute(String.format(DistributedTaskAspect.UPDATE_TASK_SQL,
+                "2019-12-31 23:59:59",
+                "2019-12-31 23:59:59",
+                "2019-12-31 23:59:59",
+                "",
+                taskName));
     }
-    private void checkTestRun(String funcName) {
-        List<Map<String, Object>> queryList = jdbcTemplate.queryForList(String.format(FETCH_SQL, funcName));
-        assertFalse(queryList.isEmpty());
-        assertEquals("test1", queryList.get(0).get("task_name"));
-        assertEquals(funcName, queryList.get(0).get("task_ex"));
 
+    /**
+     * 校验指定任务是否在数据库中存在并状态正确。
+     *
+     * @param taskName 验证的任务名称和值（task_ex）
+     */
+    private void checkTestRun(String taskName) {
+        List<Map<String, Object>> queryList = jdbcTemplate.queryForList(String.format(FETCH_SQL, taskName, taskName));
+        assertFalse(queryList.isEmpty());
+        assertEquals(taskName, queryList.get(0).get("task_name"));
+        assertEquals(taskName, queryList.get(0).get("task_ex"));
     }
 
     @Test
     void testTask1() {
         // Set up the database
-        priorTestRun();
+        priorTestRun("testTask1");
         // Run the task
         tasks.testTask1();
 
@@ -60,7 +88,7 @@ class TasksTest {
     @Test
     void testTask2() {
         // Set up the database
-        priorTestRun();
+        priorTestRun("testTask2");
         // Run the task
         tasks.testTask2();
 
@@ -71,7 +99,7 @@ class TasksTest {
     @Test
     void testTask3() {
         // Set up the database
-        priorTestRun();
+        priorTestRun("testTask3");
         // Run the task
         tasks.testTask3();
 
@@ -82,7 +110,7 @@ class TasksTest {
     @Test
     void testTask4() {
         // Set up the database
-        priorTestRun();
+        priorTestRun("testTask4");
         // Run the task
         tasks.testTask4();
 
@@ -93,7 +121,7 @@ class TasksTest {
     @Test
     void testTask5() {
         // Set up the database
-        priorTestRun();
+        priorTestRun("testTask5");
         // Run the task
         tasks.testTask5();
 
@@ -104,7 +132,7 @@ class TasksTest {
     @Test
     void testTask6() {
         // Set up the database
-        priorTestRun();
+        priorTestRun("testTask6");
         // Run the task
         tasks.testTask6();
 
@@ -115,7 +143,7 @@ class TasksTest {
     @Test
     void testTask7() {
         // Set up the database
-        priorTestRun();
+        priorTestRun("testTask7");
         // Run the task
         tasks.testTask7();
 
@@ -126,7 +154,7 @@ class TasksTest {
     @Test
     void testTask8() {
         // Set up the database
-        priorTestRun();
+        priorTestRun("testTask8");
         // Run the task
         tasks.testTask8();
 
